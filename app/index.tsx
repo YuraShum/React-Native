@@ -1,57 +1,57 @@
-import React from "react";
-import { Text, View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
-import { Link } from "expo-router";
+import { Image, ScrollView, Text, View } from "react-native";
+import { StatusBar } from 'expo-status-bar'
+import { SafeAreaView } from "react-native-safe-area-context";
+import { images } from "@/constants";
+import CustomButton from "@/components/(tabs)/CustomButton";
+import { router } from "expo-router";
 
 
 export default function App() {
     return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor="#f3f4f6" />
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Welcome to React Native!</Text>
-            </View>
-            <View style={styles.body}>
-                <Text className="text-2xl font-pblack">AOra</Text>
-                <Link href={'/profile'} style={{color: 'blue'}}>Go to profile</Link>
-            </View>
-            <View style={styles.footer}>
-                <Text style={styles.footerText}>© 2024 Your App Name</Text>
-            </View>
+        <SafeAreaView className="bg-primary h-full">
+            <ScrollView
+                contentContainerStyle={{
+                    height: '100%'
+                }}>
+                <View className="w-full justify-center items-center min-h-[85vh] px-4">
+                    <Image
+                        source={images.logo}
+                        className="w-[130px] h-[84px]"
+                        resizeMode="contain"
+                    />
+
+                    <Image
+                        source={images.cards}
+                        className="max-w-[380px] w-full h-[300px]" />
+
+                    <View
+                        className="relative mt-5">
+                        <Text
+                            className="text-3xl text-white font-bold text-center">
+                            Discover Endless Possibilities with <Text
+                                className="text-secondary-200">Aora</Text>
+                        </Text>
+                        <Image
+                            source={images.path}
+                            className="w-[136px] h-[15px] absolute -bottom-3 right-28"
+                            resizeMode="contain" />
+
+                    </View>
+                    <Text
+                        className="text-sm font-pregular text-gray-100 mt-7 text-center">Where Creativity Meets Innovation: Embark on a Journey of Limitless
+                        Exploration with Aora
+                    </Text>
+                    <CustomButton
+                        title='Continue with Email'
+                        handlePress={() => router.push('/sign-in')}
+                        containerStyles='w-full mt-7'
+                    />
+                </View>
+            </ScrollView>
+            <StatusBar
+                backgroundColor="#161622"
+                style="light" />
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#f3f4f6",
-    },
-    header: {
-        backgroundColor: "#6200ea",
-        padding: 16,
-    },
-    headerText: {
-        color: "#fff",
-        fontSize: 24,
-        fontWeight: "bold",
-        textAlign: "center",
-    },
-    body: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    bodyText: {
-        fontSize: 18,
-        color: "#333",
-    },
-    footer: {
-        backgroundColor: "#e2e8f0",
-        padding: 12,
-        alignItems: "center",
-    },
-    footerText: {
-        fontSize: 14,
-        color: "#555",
-    },
-});

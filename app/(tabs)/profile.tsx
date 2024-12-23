@@ -7,6 +7,7 @@ const Profile = (props: Props) => {
     return (
         <View>
             <Text>
+                Profile
             </Text>
         </View>
     )
