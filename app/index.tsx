@@ -11,7 +11,7 @@ export default function App() {
                 <Text style={styles.headerText}>Welcome to React Native!</Text>
             </View>
             <View style={styles.body}>
-                <Text className="text-2xl">AOra</Text>
+                <Text className="text-2xl font-pblack">AOra</Text>
                 <Link href={'/profile'} style={{color: 'blue'}}>Go to profile</Link>
             </View>
             <View style={styles.footer}>
