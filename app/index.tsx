@@ -1,7 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
+import { Link } from "expo-router";
 
-export default function RootLayout() {
+
+export default function App() {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#f3f4f6" />
@@ -9,7 +11,8 @@ export default function RootLayout() {
                 <Text style={styles.headerText}>Welcome to React Native!</Text>
             </View>
             <View style={styles.body}>
-                <Text style={styles.bodyText}>AOra!</Text>
+                <Text className="text-2xl">AOra</Text>
+                <Link href={'/profile'} style={{color: 'blue'}}>Go to profile</Link>
             </View>
             <View style={styles.footer}>
                 <Text style={styles.footerText}>© 2024 Your App Name</Text>
