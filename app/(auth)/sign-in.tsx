@@ -5,7 +5,8 @@ import { images } from '@/constants'
 import FormField from '@/components/FormField'
 import CustomButton from '@/components/(tabs)/CustomButton'
 import { Link, router } from 'expo-router'
-import { signIn } from '@/lib/appwrite'
+import { getCurrentUser, signIn } from '@/lib/appwrite'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 type Props = {}
 
@@ -16,6 +17,7 @@ const SignIn = (props: Props) => {
     password: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { setUser, setIsLogged } = useGlobalContext();
 
   const handleChangeText = (event: string) => {
     setForm({
@@ -31,21 +33,26 @@ const SignIn = (props: Props) => {
     })
   }
 
-  const submit = async () => { 
-    if(!form.email || !form.password){
-          Alert.alert('Error', "Please fill in all the fields")
-        }
-      setIsSubmitting(true)
-      try {
-        await signIn(form.email, form.password)
-  
-        router.replace('/home')
-      } catch (error: any) {
-        Alert.alert('Error', error.message)
-      } finally {
-        setIsSubmitting(false)
-      }
+  const submit = async () => {
+    if (!form.email || !form.password) {
+      Alert.alert('Error', "Please fill in all the fields")
     }
+    setIsSubmitting(true)
+
+    try {
+      await signIn(form.email, form.password);
+      const result = await getCurrentUser();
+      setUser(result);
+      setIsLogged(true);
+
+      Alert.alert("Success", "User signed in successfully");
+      router.replace("/home");
+    } catch (error: any) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   return (
     <SafeAreaView
       className='bg-primary h-full'>
@@ -90,8 +97,8 @@ const SignIn = (props: Props) => {
               Don't have account?
             </Text>
             <Link
-            href='/sign-up'
-            className=' text-lg font-psemibold text-secondary'
+              href='/sign-up'
+              className=' text-lg font-psemibold text-secondary'
             >Sign Up</Link>
           </View>
         </View>

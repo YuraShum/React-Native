@@ -6,6 +6,7 @@ import FormField from '@/components/FormField'
 import CustomButton from '@/components/(tabs)/CustomButton'
 import { Link, router } from 'expo-router'
 import {createUser} from '../../lib/appwrite'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 type Props = {}
 
@@ -17,6 +18,7 @@ const SignUp = (props: Props) => {
     password: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { setUser, setIsLogged } = useGlobalContext();
 
   const handleChangeText = (event: string) => {
     setForm({
@@ -46,8 +48,11 @@ const SignUp = (props: Props) => {
     setIsSubmitting(true)
     try {
       const result = await createUser(form.email, form.password, form.username)
+      setUser(result)
+      setIsLogged(true);
 
       router.replace('/home')
+      
     } catch (error: any) {
       Alert.alert('Error', error.message)
     } finally {
