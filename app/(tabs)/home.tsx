@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '@/constants'
 import SearchInput from '@/components/(tabs)/SearchInput'
-import TrandingGallery from '@/components/(tabs)/TrandingGallery'
+import TrandingGallery from '@/components/(tabs)/home/TrandingGallery'
 import EmptyState from '@/components/(tabs)/EmptyState'
-import { getAllPosts } from '@/lib/appwrite'
+import { getAllPosts, getLatestListPost } from '@/lib/appwrite'
 import useAppwrite from '@/hooks/useAppwrite'
 import VideoCard from '@/components/(tabs)/VideoCard'
 
@@ -15,6 +15,7 @@ const Home = (props: Props) => {
 
     const [refreshing, setRefreshing] = useState(false)
     const {data: posts, refetch} = useAppwrite(getAllPosts)
+    const {data: latestPost} = useAppwrite(getLatestListPost)
 
     const onRefresh = async () => {
         setRefreshing(true)
@@ -66,7 +67,7 @@ const Home = (props: Props) => {
                                 Lates Videos
                             </Text>
                             <TrandingGallery
-                                posts={[{ id: 1 }, { id: 2 }, { id: 3 }]} />
+                                posts={latestPost} />
 
                         </View>
                     </View>
