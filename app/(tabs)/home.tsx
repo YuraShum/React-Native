@@ -7,15 +7,14 @@ import TrandingGallery from '@/components/(tabs)/TrandingGallery'
 import EmptyState from '@/components/(tabs)/EmptyState'
 import { getAllPosts } from '@/lib/appwrite'
 import useAppwrite from '@/hooks/useAppwrite'
+import VideoCard from '@/components/(tabs)/VideoCard'
 
 type Props = {}
 
 const Home = (props: Props) => {
 
     const [refreshing, setRefreshing] = useState(false)
-    const {data: post, refetch} = useAppwrite(getAllPosts)
-
-
+    const {data: posts, refetch} = useAppwrite(getAllPosts)
 
     const onRefresh = async () => {
         setRefreshing(true)
@@ -26,11 +25,10 @@ const Home = (props: Props) => {
         <SafeAreaView
             className='bg-primary h-full'>
             <FlatList
-                data={[]}
-                keyExtractor={(item): string => `${item.id}`}
+                data={posts}
+                keyExtractor={(item): string => `${item.$id}`}
                 renderItem={({ item }) => (
-                    <Text
-                        className='text-3xl text-white'>{item.id}</Text>
+                    <VideoCard item = {item}/>
                 )}
                 ListHeaderComponent={() => (
                     <View
