@@ -8,11 +8,13 @@ import EmptyState from '@/components/(tabs)/EmptyState'
 import { getAllPosts, getLatestListPost } from '@/lib/appwrite'
 import useAppwrite from '@/hooks/useAppwrite'
 import VideoCard from '@/components/(tabs)/VideoCard'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 type Props = {}
 
 const Home = (props: Props) => {
 
+    const {user} = useGlobalContext()
     const [refreshing, setRefreshing] = useState(false)
     const {data: posts, refetch} = useAppwrite(getAllPosts)
     const {data: latestPost} = useAppwrite(getLatestListPost)
@@ -39,11 +41,11 @@ const Home = (props: Props) => {
                             <View>
                                 <Text
                                     className='font-pmedium text-sm text-gray-100'>
-                                    Welcom back!!
+                                    Welcom back,
                                 </Text>
                                 <Text
                                     className='text-2xl font-psemibold text-white'>
-                                    JSMastery
+                                    {user.username}!!
                                 </Text>
                             </View>
                             <View
